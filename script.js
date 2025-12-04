@@ -2,7 +2,8 @@
 // VARIABLES GLOBALES ET CONSTANTES
 // =========================================================
 let collaboratorStatus = {};
-const POLLING_INTERVAL = 5000; // 5 secondes
+
+const POLLING_INTERVAL = 5000;
 const THEME_STORAGE_KEY = 'githubThemePreference';
 
 // =========================================================
@@ -27,13 +28,12 @@ function setTheme(isDark) {
 function initializeTheme() {
     const storedPreference = localStorage.getItem(THEME_STORAGE_KEY);
     
-    // 1. Vérifie la préférence stockée
+    // Vérifie la préférence stockée, sinon vérifie la préférence du système
     if (storedPreference === 'dark') {
         setTheme(true);
     } else if (storedPreference === 'light') {
         setTheme(false);
     } else {
-        // 2. Sinon, vérifie la préférence du système d'exploitation
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         setTheme(prefersDark);
     }
@@ -46,6 +46,36 @@ themeToggleBtn.addEventListener('click', () => {
 
 // Initialiser le thème au chargement
 initializeTheme();
+
+// =========================================================
+// LOGIQUE DE L'AIDE DÉROULANTE
+// =========================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    const helpToggle = document.querySelector('.help-toggle');
+    const helpContent = document.getElementById('help-content');
+
+    if (helpToggle && helpContent) {
+        
+        helpToggle.addEventListener('click', () => {
+            const isExpanded = helpToggle.getAttribute('aria-expanded') === 'true';
+            
+            if (isExpanded) {
+                // Fermer
+                helpToggle.setAttribute('aria-expanded', 'false');
+                helpContent.setAttribute('hidden', '');
+            } else {
+                // Ouvrir
+                helpToggle.setAttribute('aria-expanded', 'true');
+                helpContent.removeAttribute('hidden');
+            }
+        });
+        
+        // S'assurer que le contenu est bien fermé au chargement
+        helpContent.setAttribute('hidden', '');
+        helpToggle.setAttribute('aria-expanded', 'false');
+    }
+});
 
 // =========================================================
 // LOGIQUE DU FORMULAIRE ET DE L'API GITHUB
@@ -104,7 +134,6 @@ document.getElementById('collaboratorForm').addEventListener('submit', async fun
             if (response.status === 201) { 
                 successCount++;
                 updateCollaboratorRow(newRow, username, 'invited', 'Invitation envoyée (Vérification Live)');
-                // Stocker pour le polling
                 collaboratorStatus[username] = { status: 'invited', row: newRow };
 
             } else if (response.status === 204) {
@@ -212,7 +241,7 @@ async function startPollingForStatus(token, owner, repo) {
         lastUpdatedElement.textContent = `Erreur de vérification: ${error.message}`;
     }
 
-    // Planifier la prochaine vérification
+    // Planifier la prochaine vérification après POLLING_INTERVAL (3 secondes)
     setTimeout(() => startPollingForStatus(token, owner, repo), POLLING_INTERVAL);
 }
 

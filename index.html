@@ -1,77 +1,164 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Collaborateurs GitHub Faciles (Live)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="card-container">
-        <header class="header">
-            <h1 class="title">Ajout Rapide de Collaborateurs</h1>
-            <p class="subtitle">Automatisez l'invitation d'utilisateurs à votre dépôt GitHub.</p>
-        </header>
+      <header class="header">
+        <h1 class="title">Ajout Rapide de Collaborateurs</h1>
+        <p class="subtitle">
+          Automatisez l'invitation d'utilisateurs à votre dépôt GitHub.
+        </p>
+      </header>
 
-        <button id="themeToggle" class="theme-toggle-btn">
-            Passer au Thème Sombre 🌙
+      <button id="themeToggle" class="theme-toggle-btn">
+        Passer au Thème Sombre 🌙
+      </button>
+
+      <div class="help-section">
+        <button
+          class="help-toggle"
+          aria-expanded="false"
+          aria-controls="help-content"
+        >
+          Comment utiliser l'application ? (Aide)
+          <span class="icon">▼</span>
         </button>
+        <div class="help-content" id="help-content" hidden>
+          <h3>Étape 1 : Obtenir votre Clé (PAT) 🔑</h3>
+          <p>
+            Le <strong>Token d'Accès Personnel (PAT)</strong> est votre clé
+            secrète pour communiquer avec l'API GitHub. Il doit être valide et
+            avoir les permissions d'<strong>Administration (Write)</strong> sur
+            le dépôt cible.
+          </p>
 
-        <div class="main-content-grid">
-            
-            <div class="form-column">
-                <form id="collaboratorForm" class="form">
-                    <div class="input-field">
-                        <label for="token">Token d'Accès Personnel (PAT)</label>
-                        <input type="password" id="token" placeholder="Entrez votre token d'accès personnel GitHub (ex: ghp_...)" required>
-                        <small class="help-text">Nécessite le scope 'repo'. Ce token n'est pas stocké.</small>
-                    </div>
+          <h3>Étape 2 : Entrer les Coordonnées du Dépôt 📂</h3>
+          <ul>
+            <li>
+              <strong>Propriétaire :</strong> Le nom de l'utilisateur ou de
+              l'organisation (ex: <code>PlateformeProjects</code>).
+            </li>
+            <li>
+              <strong>Dépôt :</strong> Le nom exact du dépôt (ex:
+              <code>moulinage</code>).
+            </li>
+          </ul>
 
-                    <div class="input-field group">
-                        <div class="repo-input">
-                            <label for="owner">Propriétaire (Utilisateur ou Organisation)</label>
-                            <input type="text" id="owner" placeholder="Ex: mon_organisation" required>
-                        </div>
-                        <div class="repo-input">
-                            <label for="repo">Nom du Dépôt</label>
-                            <input type="text" id="repo" placeholder="Ex: mon_projet_web" required>
-                        </div>
-                    </div>
+          <h3>Étape 3 : Lister les Collaborateurs 👥</h3>
+          <p>
+            Entrez les pseudos GitHub des utilisateurs que vous voulez inviter.
+            Vous pouvez les séparer par des virgules, des espaces ou des sauts
+            de ligne.
+          </p>
 
-                    <div class="input-field">
-                        <label for="collaborators">Pseudos des Collaborateurs</label>
-                        <textarea id="collaborators" rows="5" placeholder="Séparez les pseudos par des virgules ou des sauts de ligne (ex: user1, user2, user3)" required></textarea>
-                        <small class="help-text">La permission par défaut sera 'push' (écriture).</small>
-                    </div>
-
-                    <button type="submit" id="submitButton" class="btn-primary">
-                        🚀 Lancer les Invitations
-                    </button>
-                </form>
-
-                <div id="statusMessage" class="status-box" role="alert" style="display: none;"></div>
+          <h3>Étape 4 : Suivre le Statut en Direct (Live) 🟢</h3>
+          <p>
+            Après avoir cliqué sur "Lancer", l'application vérifiera toutes les
+            5 secondes si les utilisateurs invités ont accepté la collaboration.
+            Le statut passera de <strong>'En attente'</strong> à
+            <strong>'Accepté !'</strong> automatiquement.
+          </p>
+        </div>
+      </div>
+      <div class="main-content-grid">
+        <div class="form-column">
+          <form id="collaboratorForm" class="form">
+            <div class="input-field">
+              <label for="token">Token d'Accès Personnel (PAT)</label>
+              <input
+                type="password"
+                id="token"
+                placeholder="Entrez votre token d'accès personnel GitHub (ex: ghp_...)"
+                required
+              />
+              <small class="help-text"
+                >Nécessite la permission d'administration pour ce dépôt.</small
+              >
             </div>
 
-            <div id="dynamicResults" class="dynamic-results-column" style="display: none;">
-                <h2>Statut des Invitations (Live)</h2>
-                <table id="resultsTable" class="status-table">
-                    <thead>
-                        <tr>
-                            <th>Pseudo</th>
-                            <th>Statut</th>
-                            <th>Détails</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        </tbody>
-                </table>
-                <small id="lastUpdated" class="help-text" style="margin-top: 15px;"></small>
+            <div class="input-field group">
+              <div class="repo-input">
+                <label for="owner"
+                  >Propriétaire (Utilisateur ou Organisation)</label
+                >
+                <input
+                  type="text"
+                  id="owner"
+                  placeholder="Ex: mon_organisation"
+                  required
+                />
+              </div>
+              <div class="repo-input">
+                <label for="repo">Nom du Dépôt</label>
+                <input
+                  type="text"
+                  id="repo"
+                  placeholder="Ex: mon_projet_web"
+                  required
+                />
+              </div>
             </div>
-            
+
+            <div class="input-field">
+              <label for="collaborators">Pseudos des Collaborateurs</label>
+              <textarea
+                id="collaborators"
+                rows="5"
+                placeholder="Séparez les pseudos par des virgules ou des sauts de ligne (ex: user1, user2, user3)"
+                required
+              ></textarea>
+              <small class="help-text"
+                >La permission par défaut sera 'push' (écriture).</small
+              >
+            </div>
+
+            <button type="submit" id="submitButton" class="btn-primary">
+              🚀 Lancer les Invitations
+            </button>
+          </form>
+
+          <div
+            id="statusMessage"
+            class="status-box"
+            role="alert"
+            style="display: none"
+          ></div>
         </div>
+
+        <div
+          id="dynamicResults"
+          class="dynamic-results-column"
+          style="display: none"
+        >
+          <h2>Statut des Invitations (Live)</h2>
+          <table id="resultsTable" class="status-table">
+            <thead>
+              <tr>
+                <th>Pseudo</th>
+                <th>Statut</th>
+                <th>Détails</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <small
+            id="lastUpdated"
+            class="help-text"
+            style="margin-top: 15px"
+          ></small>
         </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

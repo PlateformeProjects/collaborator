@@ -4,17 +4,17 @@
 
 /* Thème CLAIR (Par Défaut) */
 :root {
-    --color-text-primary: #24292e;         /* Texte principal */
-    --color-text-secondary: #586069;       /* Texte secondaire */
-    --color-bg-body: #f6f8fa;              /* Fond de page */
-    --color-bg-card: #ffffff;              /* Fond de la carte */
-    --color-border: #d1d5da;               /* Bordures */
+    --color-text-primary: #24292e;
+    --color-text-secondary: #586069;
+    --color-bg-body: #f6f8fa;
+    --color-bg-card: #ffffff;
+    --color-border: #d1d5da;
     --color-shadow: rgba(27, 31, 35, 0.08);
 
     /* Couleurs fixes */
-    --color-primary: #0366d6;              /* Bleu GitHub */
-    --color-success: #28a745;              /* Vert */
-    --color-error: #cb2431;                /* Rouge */
+    --color-primary: #0366d6;
+    --color-success: #28a745;
+    --color-error: #cb2431;
 
     /* Couleurs des badges et alertes claires */
     --color-badge-invited: #b08800;
@@ -29,7 +29,7 @@
 .dark-theme {
     --color-text-primary: #c9d1d9;
     --color-text-secondary: #8b949e;
-    --color-bg-body: #0d1117;              /* Noir GitHub */
+    --color-bg-body: #0d1117;
     --color-bg-card: #161b22;
     --color-border: #30363d;
     --color-shadow: rgba(0, 0, 0, 0.3);
@@ -57,7 +57,7 @@ body {
     align-items: center;
     padding: 20px;
     margin: 0;
-    transition: background-color 0.3s, color 0.3s; /* Transition fluide */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .card-container {
@@ -65,20 +65,20 @@ body {
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 5px 20px var(--color-shadow);
-    max-width: 1000px; /* Élargi pour les deux colonnes */
+    max-width: 1000px;
     width: 100%;
     transition: background-color 0.3s;
-    position: relative; /* Pour positionner le bouton de thème */
+    position: relative;
 }
 
 .header { text-align: center; margin-bottom: 30px; }
 .title { color: var(--color-primary); margin-bottom: 5px; font-size: 28px; }
 .subtitle { color: var(--color-text-secondary); font-size: 16px; }
 
-/* Conteneur principal utilisant Flexbox pour les deux colonnes */
+/* Conteneur principal utilisant Flexbox pour les deux colonnes (Formulaire et Statut) */
 .main-content-grid {
     display: flex;
-    gap: 30px; /* Espace entre les deux colonnes */
+    gap: 30px;
     margin-top: 20px;
 }
 
@@ -146,7 +146,7 @@ input:focus, textarea:focus {
 .btn-primary:disabled { background-color: #94d3a2; cursor: not-allowed; opacity: 0.8; }
 
 /* ========================================================= */
-/* ALERTES ET STATUTS */
+/* ALERTES ET STATUTS DE LA COLONNE DE DROITE */
 /* ========================================================= */
 
 /* Zone d'affichage des messages généraux (alertes) */
@@ -167,7 +167,7 @@ input:focus, textarea:focus {
     color: var(--color-alert-error-text);
 }
 
-/* Styles du tableau de statut dynamique (dans la colonne de droite) */
+/* Styles du tableau de statut dynamique */
 .dynamic-results-column h2 { color: var(--color-text-primary); font-size: 20px; margin-bottom: 15px; }
 
 .status-table {
@@ -176,8 +176,8 @@ input:focus, textarea:focus {
     border: 1px solid var(--color-border);
     border-radius: 6px;
     overflow: hidden;
-    display: block; /* Permet le scroll vertical */
-    max-height: 400px;
+    display: block;
+    max-height: 400px; /* Hauteur fixe pour le scroll */
     overflow-y: auto;
 }
 
@@ -201,25 +201,63 @@ input:focus, textarea:focus {
     display: inline-block;
 }
 
-.status-invited {
-    background-color: var(--color-badge-invited-bg);
-    color: var(--color-badge-invited);
+.status-invited { background-color: var(--color-badge-invited-bg); color: var(--color-badge-invited); }
+.status-accepted { background-color: var(--color-alert-success-bg); color: var(--color-success); }
+.status-failed { background-color: var(--color-alert-error-bg); color: var(--color-error); }
+.status-collaborator { background-color: var(--color-alert-success-bg); color: var(--color-primary); }
+
+/* ========================================================= */
+/* AIDE DÉROULANTE (ACCORDÉON) */
+/* ========================================================= */
+
+.help-section {
+    margin: 20px 0;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
-.status-accepted {
-    background-color: var(--color-alert-success-bg);
-    color: var(--color-success);
+.help-toggle {
+    width: 100%;
+    text-align: left;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+    padding: 12px 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
 }
 
-.status-failed {
-    background-color: var(--color-alert-error-bg);
-    color: var(--color-error);
+.help-toggle:hover {
+    background-color: var(--color-border);
 }
 
-.status-collaborator {
-    background-color: var(--color-alert-success-bg);
-    color: var(--color-primary);
+.help-toggle .icon {
+    transition: transform 0.3s ease;
+    display: inline-block;
+    font-size: 12px;
 }
+
+.help-toggle[aria-expanded="true"] .icon {
+    transform: rotate(180deg);
+}
+
+.help-content {
+    padding: 15px;
+    background-color: var(--color-bg-card);
+    border-top: 1px solid var(--color-border);
+    font-size: 14px;
+}
+
+.help-content h3 { font-size: 15px; color: var(--color-primary); margin: 10px 0 5px 0; }
+.help-content ul { margin-top: 5px; padding-left: 20px; list-style-type: disc; }
+.help-content p { margin-bottom: 10px; line-height: 1.5; }
+
 
 /* ========================================================= */
 /* BOUTON DE THÈME ET RESPONSIVE DESIGN */
@@ -250,14 +288,11 @@ input:focus, textarea:focus {
     }
 
     .dynamic-results-column {
-        /* Ajouter une bordure pour séparer le formulaire des résultats en mode colonne */
         padding-top: 20px;
         border-top: 1px solid var(--color-border);
     }
     
-    .status-table {
-        max-height: none; /* Désactiver la hauteur fixe en mobile */
-    }
+    .status-table { max-height: none; }
     
     .theme-toggle-btn {
         position: static;
