@@ -2,7 +2,7 @@
 // VARIABLES GLOBALES ET CONSTANTES
 // =========================================================
 let collaboratorStatus = {};
-const POLLING_INTERVAL = 10000; // 10 secondes
+const POLLING_INTERVAL = 5000; // 5 secondes
 const THEME_STORAGE_KEY = 'githubThemePreference';
 
 // =========================================================

@@ -18,53 +18,59 @@
             Passer au Thème Sombre 🌙
         </button>
 
-        <form id="collaboratorForm" class="form">
-            <div class="input-field">
-                <label for="token">Token d'Accès Personnel (PAT)</label>
-                <input type="password" id="token" placeholder="Entrez votre token d'accès personnel GitHub (ex: ghp_...)" required>
-                <small class="help-text">Nécessite le scope 'repo'. Ce token n'est pas stocké.</small>
+        <div class="main-content-grid">
+            
+            <div class="form-column">
+                <form id="collaboratorForm" class="form">
+                    <div class="input-field">
+                        <label for="token">Token d'Accès Personnel (PAT)</label>
+                        <input type="password" id="token" placeholder="Entrez votre token d'accès personnel GitHub (ex: ghp_...)" required>
+                        <small class="help-text">Nécessite le scope 'repo'. Ce token n'est pas stocké.</small>
+                    </div>
+
+                    <div class="input-field group">
+                        <div class="repo-input">
+                            <label for="owner">Propriétaire (Utilisateur ou Organisation)</label>
+                            <input type="text" id="owner" placeholder="Ex: mon_organisation" required>
+                        </div>
+                        <div class="repo-input">
+                            <label for="repo">Nom du Dépôt</label>
+                            <input type="text" id="repo" placeholder="Ex: mon_projet_web" required>
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <label for="collaborators">Pseudos des Collaborateurs</label>
+                        <textarea id="collaborators" rows="5" placeholder="Séparez les pseudos par des virgules ou des sauts de ligne (ex: user1, user2, user3)" required></textarea>
+                        <small class="help-text">La permission par défaut sera 'push' (écriture).</small>
+                    </div>
+
+                    <button type="submit" id="submitButton" class="btn-primary">
+                        🚀 Lancer les Invitations
+                    </button>
+                </form>
+
+                <div id="statusMessage" class="status-box" role="alert" style="display: none;"></div>
             </div>
 
-            <div class="input-field group">
-                <div class="repo-input">
-                    <label for="owner">Propriétaire (Utilisateur ou Organisation)</label>
-                    <input type="text" id="owner" placeholder="Ex: mon_organisation" required>
-                </div>
-                <div class="repo-input">
-                    <label for="repo">Nom du Dépôt</label>
-                    <input type="text" id="repo" placeholder="Ex: mon_projet_web" required>
-                </div>
+            <div id="dynamicResults" class="dynamic-results-column" style="display: none;">
+                <h2>Statut des Invitations (Live)</h2>
+                <table id="resultsTable" class="status-table">
+                    <thead>
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Statut</th>
+                            <th>Détails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+                <small id="lastUpdated" class="help-text" style="margin-top: 15px;"></small>
             </div>
-
-            <div class="input-field">
-                <label for="collaborators">Pseudos des Collaborateurs</label>
-                <textarea id="collaborators" rows="5" placeholder="Séparez les pseudos par des virgules ou des sauts de ligne (ex: user1, user2, user3)" required></textarea>
-                <small class="help-text">La permission par défaut sera 'push' (écriture).</small>
-            </div>
-
-            <button type="submit" id="submitButton" class="btn-primary">
-                🚀 Lancer les Invitations
-            </button>
-        </form>
-
-        <div id="statusMessage" class="status-box" role="alert" style="display: none;"></div>
-        
-        <div id="dynamicResults" class="dynamic-results-section" style="display: none;">
-            <h2>Statut des Invitations (Live)</h2>
-            <table id="resultsTable" class="status-table">
-                <thead>
-                    <tr>
-                        <th>Pseudo</th>
-                        <th>Statut</th>
-                        <th>Détails</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-            </table>
-            <small id="lastUpdated" class="help-text" style="margin-top: 15px;"></small>
+            
         </div>
-    </div>
+        </div>
 
     <script src="script.js"></script>
 </body>

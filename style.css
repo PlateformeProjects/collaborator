@@ -12,9 +12,9 @@
     --color-shadow: rgba(27, 31, 35, 0.08);
 
     /* Couleurs fixes */
-    --color-primary: #0366d6;
-    --color-success: #28a745;
-    --color-error: #cb2431;
+    --color-primary: #0366d6;              /* Bleu GitHub */
+    --color-success: #28a745;              /* Vert */
+    --color-error: #cb2431;                /* Rouge */
 
     /* Couleurs des badges et alertes claires */
     --color-badge-invited: #b08800;
@@ -29,7 +29,7 @@
 .dark-theme {
     --color-text-primary: #c9d1d9;
     --color-text-secondary: #8b949e;
-    --color-bg-body: #0d1117;
+    --color-bg-body: #0d1117;              /* Noir GitHub */
     --color-bg-card: #161b22;
     --color-border: #30363d;
     --color-shadow: rgba(0, 0, 0, 0.3);
@@ -44,7 +44,7 @@
 }
 
 /* ========================================================= */
-/* STYLES GÉNÉRAUX ET TRANSITIONS */
+/* STYLES GÉNÉRAUX ET LAYOUT */
 /* ========================================================= */
 
 body {
@@ -57,7 +57,7 @@ body {
     align-items: center;
     padding: 20px;
     margin: 0;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, color 0.3s; /* Transition fluide */
 }
 
 .card-container {
@@ -65,16 +65,40 @@ body {
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 5px 20px var(--color-shadow);
-    max-width: 700px;
+    max-width: 1000px; /* Élargi pour les deux colonnes */
     width: 100%;
     transition: background-color 0.3s;
+    position: relative; /* Pour positionner le bouton de thème */
 }
 
 .header { text-align: center; margin-bottom: 30px; }
 .title { color: var(--color-primary); margin-bottom: 5px; font-size: 28px; }
 .subtitle { color: var(--color-text-secondary); font-size: 16px; }
 
-/* Styles du formulaire */
+/* Conteneur principal utilisant Flexbox pour les deux colonnes */
+.main-content-grid {
+    display: flex;
+    gap: 30px; /* Espace entre les deux colonnes */
+    margin-top: 20px;
+}
+
+/* Définition de la largeur des colonnes */
+.form-column {
+    flex: 1 1 50%;
+    min-width: 350px;
+}
+
+.dynamic-results-column {
+    flex: 1 1 50%;
+    min-width: 350px;
+    padding-top: 0;
+    border-top: none;
+}
+
+/* ========================================================= */
+/* FORMULAIRE ET ÉLÉMENTS DE SAISIE */
+/* ========================================================= */
+
 .input-field { margin-bottom: 20px; }
 .input-field.group { display: flex; gap: 15px; }
 .input-field.group .repo-input { flex: 1; }
@@ -103,7 +127,7 @@ input:focus, textarea:focus {
 
 .help-text { display: block; margin-top: 5px; font-size: 12px; color: var(--color-text-secondary); }
 
-/* Style du bouton principal */
+/* Bouton principal */
 .btn-primary {
     background-color: var(--color-success);
     color: white;
@@ -121,9 +145,13 @@ input:focus, textarea:focus {
 .btn-primary:hover:not(:disabled) { background-color: #22863a; }
 .btn-primary:disabled { background-color: #94d3a2; cursor: not-allowed; opacity: 0.8; }
 
+/* ========================================================= */
+/* ALERTES ET STATUTS */
+/* ========================================================= */
+
 /* Zone d'affichage des messages généraux (alertes) */
 .status-box {
-    margin-top: 25px;
+    margin-top: 20px;
     padding: 15px;
     border-radius: 6px;
     font-weight: 500;
@@ -139,15 +167,8 @@ input:focus, textarea:focus {
     color: var(--color-alert-error-text);
 }
 
-
-/* Styles du tableau de statut dynamique */
-.dynamic-results-section {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid var(--color-border);
-}
-
-.dynamic-results-section h2 { color: var(--color-text-primary); font-size: 20px; margin-bottom: 15px; }
+/* Styles du tableau de statut dynamique (dans la colonne de droite) */
+.dynamic-results-column h2 { color: var(--color-text-primary); font-size: 20px; margin-bottom: 15px; }
 
 .status-table {
     width: 100%;
@@ -155,6 +176,9 @@ input:focus, textarea:focus {
     border: 1px solid var(--color-border);
     border-radius: 6px;
     overflow: hidden;
+    display: block; /* Permet le scroll vertical */
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .status-table th, .status-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--color-border); }
@@ -193,11 +217,14 @@ input:focus, textarea:focus {
 }
 
 .status-collaborator {
-    background-color: var(--color-alert-success-bg); /* Utilisation de la couleur succès pour un statut positif */
+    background-color: var(--color-alert-success-bg);
     color: var(--color-primary);
 }
 
-/* Style du bouton de bascule de thème */
+/* ========================================================= */
+/* BOUTON DE THÈME ET RESPONSIVE DESIGN */
+/* ========================================================= */
+
 .theme-toggle-btn {
     position: absolute;
     top: 20px;
@@ -214,4 +241,32 @@ input:focus, textarea:focus {
 
 .theme-toggle-btn:hover {
     background-color: var(--color-bg-body);
+}
+
+/* Media Query pour les petits écrans (Responsive) */
+@media (max-width: 900px) {
+    .main-content-grid {
+        flex-direction: column; /* Passer en colonne unique */
+    }
+
+    .dynamic-results-column {
+        /* Ajouter une bordure pour séparer le formulaire des résultats en mode colonne */
+        padding-top: 20px;
+        border-top: 1px solid var(--color-border);
+    }
+    
+    .status-table {
+        max-height: none; /* Désactiver la hauteur fixe en mobile */
+    }
+    
+    .theme-toggle-btn {
+        position: static;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .card-container {
+        padding: 20px;
+    }
 }
