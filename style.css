@@ -1,0 +1,217 @@
+/* ========================================================= */
+/* VARIABLES DE COULEURS */
+/* ========================================================= */
+
+/* Thème CLAIR (Par Défaut) */
+:root {
+    --color-text-primary: #24292e;         /* Texte principal */
+    --color-text-secondary: #586069;       /* Texte secondaire */
+    --color-bg-body: #f6f8fa;              /* Fond de page */
+    --color-bg-card: #ffffff;              /* Fond de la carte */
+    --color-border: #d1d5da;               /* Bordures */
+    --color-shadow: rgba(27, 31, 35, 0.08);
+
+    /* Couleurs fixes */
+    --color-primary: #0366d6;
+    --color-success: #28a745;
+    --color-error: #cb2431;
+
+    /* Couleurs des badges et alertes claires */
+    --color-badge-invited: #b08800;
+    --color-badge-invited-bg: #fffbdd;
+    --color-alert-success-bg: #f0fff4;
+    --color-alert-error-bg: #ffeef0;
+    --color-alert-success-text: #1c5225;
+    --color-alert-error-text: #7b1921;
+}
+
+/* Thème SOMBRE (.dark-theme) */
+.dark-theme {
+    --color-text-primary: #c9d1d9;
+    --color-text-secondary: #8b949e;
+    --color-bg-body: #0d1117;
+    --color-bg-card: #161b22;
+    --color-border: #30363d;
+    --color-shadow: rgba(0, 0, 0, 0.3);
+
+    /* Couleurs des badges et alertes sombres */
+    --color-badge-invited: #e3b000;
+    --color-badge-invited-bg: #302d1d;
+    --color-alert-success-bg: #1f3928;
+    --color-alert-error-bg: #3f1e24;
+    --color-alert-success-text: var(--color-success);
+    --color-alert-error-text: var(--color-error);
+}
+
+/* ========================================================= */
+/* STYLES GÉNÉRAUX ET TRANSITIONS */
+/* ========================================================= */
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.card-container {
+    background-color: var(--color-bg-card);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px var(--color-shadow);
+    max-width: 700px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.header { text-align: center; margin-bottom: 30px; }
+.title { color: var(--color-primary); margin-bottom: 5px; font-size: 28px; }
+.subtitle { color: var(--color-text-secondary); font-size: 16px; }
+
+/* Styles du formulaire */
+.input-field { margin-bottom: 20px; }
+.input-field.group { display: flex; gap: 15px; }
+.input-field.group .repo-input { flex: 1; }
+
+label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+}
+
+.help-text { display: block; margin-top: 5px; font-size: 12px; color: var(--color-text-secondary); }
+
+/* Style du bouton principal */
+.btn-primary {
+    background-color: var(--color-success);
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) { background-color: #22863a; }
+.btn-primary:disabled { background-color: #94d3a2; cursor: not-allowed; opacity: 0.8; }
+
+/* Zone d'affichage des messages généraux (alertes) */
+.status-box {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+.success {
+    background-color: var(--color-alert-success-bg);
+    border: 1px solid var(--color-success);
+    color: var(--color-alert-success-text);
+}
+.error {
+    background-color: var(--color-alert-error-bg);
+    border: 1px solid var(--color-error);
+    color: var(--color-alert-error-text);
+}
+
+
+/* Styles du tableau de statut dynamique */
+.dynamic-results-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.dynamic-results-section h2 { color: var(--color-text-primary); font-size: 20px; margin-bottom: 15px; }
+
+.status-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.status-table th, .status-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--color-border); }
+
+.status-table th {
+    background-color: var(--color-bg-body);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.status-table tr:last-child td { border-bottom: none; }
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.status-invited {
+    background-color: var(--color-badge-invited-bg);
+    color: var(--color-badge-invited);
+}
+
+.status-accepted {
+    background-color: var(--color-alert-success-bg);
+    color: var(--color-success);
+}
+
+.status-failed {
+    background-color: var(--color-alert-error-bg);
+    color: var(--color-error);
+}
+
+.status-collaborator {
+    background-color: var(--color-alert-success-bg); /* Utilisation de la couleur succès pour un statut positif */
+    color: var(--color-primary);
+}
+
+/* Style du bouton de bascule de thème */
+.theme-toggle-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--color-bg-card);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s, border-color 0.3s;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--color-bg-body);
+}
